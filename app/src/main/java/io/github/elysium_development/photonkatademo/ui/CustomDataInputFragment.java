@@ -148,8 +148,6 @@ public class CustomDataInputFragment extends Fragment {
     }
 
     int numOfDigits = gridString.replaceAll("\\D", "").length();
-    if (numOfDigits!= count*lines) { //its not valid
-    }
     return numOfDigits == count*lines;
   }
 
