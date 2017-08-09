@@ -19,9 +19,11 @@ public class GridUtilities {
             try {
                 for (int row = 0; row < rows.length; row++) {
                     String[] columns = rows[row].split("\\s+");
-                    for (int column = 0; column < columns.length; column++) {
-                        if (column < output[0].length) {
-                            output[row][column] = Integer.valueOf(columns[column]);
+                    if (columns.length==firstColumns.length) {
+                        for (int column = 0; column < columns.length; column++) {
+                            if (column < output[0].length) {
+                                output[row][column] = Integer.valueOf(columns[column]);
+                            }
                         }
                     }
                 }

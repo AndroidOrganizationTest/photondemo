@@ -123,15 +123,21 @@ public class CustomDataInputFragment extends Fragment {
         @OnClick(R.id.go_button)
         public void onClick(View view) {
             String gridString = customGridContents.getText().toString();
+            if (gridString.contains("-"))
+                showErrorDialog();
             int[][] potentialGridContents = GridUtilities.gridArrayFromString(gridString);
             if (gridContentsAreValid(potentialGridContents)) {
                 loadGrid(potentialGridContents);
             } else {
-                new AlertDialog.Builder(getContext())
-                        .setTitle(R.string.invalid_content)
-                        .setMessage(R.string.invalid_grid_message)
-                        .setPositiveButton(R.string.ok, null)
-                        .show();
+                showErrorDialog();
             }
         }
+
+    private void showErrorDialog() {
+        new AlertDialog.Builder(getContext())
+                .setTitle(R.string.invalid_content)
+                .setMessage(R.string.invalid_grid_message)
+                .setPositiveButton(R.string.ok, null)
+                .show();
+    }
 }
