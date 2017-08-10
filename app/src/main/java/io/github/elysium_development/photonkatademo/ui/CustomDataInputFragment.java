@@ -125,15 +125,9 @@ public class CustomDataInputFragment extends Fragment {
   public void onClick(View view) {
     String gridString = customGridContents.getText().toString();
     String x = GridUtilities.gridStringAreValid(gridString);
-    Log.e("tree"," x is "+x);
     if (TextUtils.isEmpty(x)) {
       int[][] potentialGridContents = GridUtilities.gridArrayFromString(gridString);
       loadGrid(potentialGridContents);
-/*      if (!gridContentsAreValid(potentialGridContents) *//*|| !gridStringAreValid(gridString)*//*) {
-        showErrorDialog();
-      } else {
-        loadGrid(potentialGridContents);
-      }*/
     } else {
       showErrorDialog(x);
     }

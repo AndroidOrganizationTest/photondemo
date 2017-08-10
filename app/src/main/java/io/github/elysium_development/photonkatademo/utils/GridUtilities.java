@@ -46,13 +46,13 @@ public class GridUtilities {
     int count = 0;
     for (String row : rows) {
       String[] column = row.split("\\s+");
-      if (column.length < 5 || column.length > 100) return "Must have 5 to 100 numbers per line";
+      if (column.length < 5 || column.length > 100) return "Minimum column length is 5";
       for (String aColumn : column) {
         try {
           Integer.parseInt(aColumn);
           count++;
         } catch (NumberFormatException e) {
-          return "Only Numeric Characters Allowed";
+          return "Only numbers are accepted";
         }
       }
     }
