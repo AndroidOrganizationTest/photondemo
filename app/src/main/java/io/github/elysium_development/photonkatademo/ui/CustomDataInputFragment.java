@@ -3,6 +3,7 @@ package io.github.elysium_development.photonkatademo.ui;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,11 +84,7 @@ public class CustomDataInputFragment extends Fragment {
    * @return
    */
   private boolean gridContentsAreValid(int[][] contents) {
-    if (contents.length < 1 || contents.length > 10 || contents[0].length < 5 || contents[0].length > 100) {
-      return false;
-    } else {
-      return true;
-    }
+    return !(contents.length < 1 || contents.length > 10 || contents[0].length < 5 || contents[0].length > 100);
   }
 
   /**
@@ -127,34 +124,28 @@ public class CustomDataInputFragment extends Fragment {
   @OnClick(R.id.go_button)
   public void onClick(View view) {
     String gridString = customGridContents.getText().toString();
-    int[][] potentialGridContents = GridUtilities.gridArrayFromString(gridString);
-    if (!gridContentsAreValid(potentialGridContents) || gridString.contains("-") ||
-            !gridStringAreValid(gridString)) {
-      showErrorDialog();
-    } else {
+    String x = GridUtilities.gridStringAreValid(gridString);
+    Log.e("tree"," x is "+x);
+    if (TextUtils.isEmpty(x)) {
+      int[][] potentialGridContents = GridUtilities.gridArrayFromString(gridString);
       loadGrid(potentialGridContents);
+/*      if (!gridContentsAreValid(potentialGridContents) *//*|| !gridStringAreValid(gridString)*//*) {
+        showErrorDialog();
+      } else {
+        loadGrid(potentialGridContents);
+      }*/
+    } else {
+      showErrorDialog(x);
     }
 
   }
 
-  private boolean gridStringAreValid(String gridString) {
-    String[] parts = gridString.split("\n");
-    int lines = parts.length;
-    int count = 0;
-    for (int i = 0; i < parts[0].length(); i++) {
-      if (Character.isDigit(parts[0].charAt(i))) {
-        count++;
-      }
-    }
 
-    int numOfDigits = gridString.replaceAll("\\D", "").length();
-    return numOfDigits == count*lines;
-  }
 
-  private void showErrorDialog() {
+  private void showErrorDialog(String message) {
     new AlertDialog.Builder(getContext())
             .setTitle(R.string.invalid_content)
-            .setMessage(R.string.invalid_grid_message)
+            .setMessage(message)
             .setPositiveButton(R.string.ok, null)
             .show();
   }
